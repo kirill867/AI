@@ -2,10 +2,13 @@ from __future__ import annotations
 
 import os
 import time
+import torch
+
 
 from modules import timer
 from modules import initialize_util
 from modules import initialize
+
 
 startup_timer = timer.startup_timer
 startup_timer.record("launcher")
@@ -47,6 +50,8 @@ def api_only():
 
 def webui():
     from modules.shared_cmd_options import cmd_opts
+
+    os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'max_split_size_mb=1'
 
     launch_api = cmd_opts.api
     initialize.initialize()
